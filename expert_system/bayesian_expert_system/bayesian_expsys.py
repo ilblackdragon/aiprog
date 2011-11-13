@@ -4,6 +4,21 @@ import os
 FILE_ENCODING = 'cp1251'
 CONSOLE_ENCODING = 'cp866'
 
+def exception(name):
+    return type(name, (Exception, ), {})
+    
+IncorrectNumberOfTermsExcpetion = exception('IncorrectNumberOfTermsExcpetion')
+
+def get_terms(line, types):
+    line = line.split(',')
+    if len(line) != len(types):
+        raise IncorrectNumberOfTermsExcpetion()
+    return [term_type(term) for term, term_type in zip(line, types)]
+
+def create_object(line, types, object_class, *args, **kwargs):
+    args = get_terms(line, types) + list(args)
+    return object_class(*args, **kwargs)
+    
 class ObjectWithName(object):
         
     def __unicode__(self):
@@ -14,14 +29,14 @@ class ObjectWithName(object):
 
 class Resolution(ObjectWithName):
     
-    def __init__(self, id, name, prob):
+    def __init__(self, id, prob, name):
         self.id = id
         self.name = name
         self.prob = prob
 
 class Answer(ObjectWithName):
     
-    def __init__(self, id, name, prob):
+    def __init__(self, id, prob, name):
         self.id = id
         self.name = name
         self.prob = prob
@@ -65,28 +80,19 @@ class ExpertSystem(object):
         self.load()
         
     def load(self):
-        answers = codecs.open("data/answers.dat", "r", FILE_ENCODING).readlines()
-        self.answers = {}
-        for q in answers:
-            q = q.strip()
-            if q:
-                id, prob, name = q.split(",")
-                self.answers[int(id)] = Answer(int(id), name, float(prob))
-        questions = codecs.open("data/questions.dat", "r", FILE_ENCODING).readlines()
-        self.questions = {}
-        for q in questions:
-            q = q.strip()
-            if q:
-                id, text = q.split(",")
-                self.questions[int(id)] = Question(int(id), text, self.answers.values())
-        resolutions = codecs.open("data/resolutions.dat", "r", FILE_ENCODING).readlines()
-        self.total_guess_count = int(resolutions.pop(0))
-        self.resolutions = {}
-        for r in resolutions:
-            r = r.strip()
-            if r:
-                id, prob, name = r.split(",")
-                self.resolutions[int(id)] = Resolution(int(id), name, float(prob))
+        lines = codecs.open("data/answers.dat", "r", FILE_ENCODING).readlines()
+        answers = [create_object(line.strip(), (int, float, unicode), Answer) for line in lines]
+        self.answers = dict([(obj.id, obj) for obj in answers])
+
+        lines = codecs.open("data/questions.dat", "r", FILE_ENCODING).readlines()
+        questions = [create_object(line.strip(), (int, unicode), Question, answers) for line in lines]
+        self.questions = dict([(obj.id, obj) for obj in questions])
+
+        lines = codecs.open("data/resolutions.dat", "r", FILE_ENCODING).readlines()
+        self.total_guess_count = int(lines.pop(0))
+        resolutions = [create_object(line.strip(), (int, float, unicode), Resolution) for line in lines]
+        self.resolutions = dict([(obj.id, obj) for obj in resolutions])
+
         if os.path.exists("data/probs.dat") and os.path.exists("data/answer_count.dat"):
             probs_list = codecs.open("data/probs.dat", "r", FILE_ENCODING).readlines()
             for probs in probs_list:
