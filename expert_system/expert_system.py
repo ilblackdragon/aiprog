@@ -1,34 +1,49 @@
 
+class BasicContext(object):
+    
+    def __init__(self):
+        self.data = {}
+        
+    def add(self, question, answer):
+        self.data[question] = answer
+        
+    def remove(self, question):
+        self.data.pop(question)
+        
 class QuestionBase(object):
     
     def __init__(self, name):   
         self.name = name
         
-    def ask(self):
+    def ask(self, context):
         return None
 
 class ExpertSystem(object):
     
-    def __init__(self):
-        pass
-        
+    def __init__(self, context):
+        self.context = context
+
     def get_question(self):
-        pass
+        return None
+
+    def get_resolution(self):
+        return None
         
-    def get_answer(self):
+    def show_resolution(self, resolution):
         pass
         
     def run(self):
-        pass
         while True:
             question = self.get_question()
             if not question:
                 break
-            answer = question.ask()
+            answer = question.ask(self.context)
             if not answer:
                 break
-            context.add(answer)
-        
+            self.context.add(question, answer)
+        resolution = self.get_resolution()
+        if resolution:
+            self.show_resolution(resolution)
 
 if __name__ == "__main__":
     pass

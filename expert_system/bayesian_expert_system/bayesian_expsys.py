@@ -65,21 +65,21 @@ class ExpertSystem(object):
         self.load()
         
     def load(self):
-        answers = codecs.open("answers.dat", "r", FILE_ENCODING).readlines()
+        answers = codecs.open("data/answers.dat", "r", FILE_ENCODING).readlines()
         self.answers = {}
         for q in answers:
             q = q.strip()
             if q:
                 id, prob, name = q.split(",")
                 self.answers[int(id)] = Answer(int(id), name, float(prob))
-        questions = codecs.open("questions.dat", "r", FILE_ENCODING).readlines()
+        questions = codecs.open("data/questions.dat", "r", FILE_ENCODING).readlines()
         self.questions = {}
         for q in questions:
             q = q.strip()
             if q:
                 id, text = q.split(",")
                 self.questions[int(id)] = Question(int(id), text, self.answers.values())
-        resolutions = codecs.open("resolutions.dat", "r", FILE_ENCODING).readlines()
+        resolutions = codecs.open("data/resolutions.dat", "r", FILE_ENCODING).readlines()
         self.total_guess_count = int(resolutions.pop(0))
         self.resolutions = {}
         for r in resolutions:
@@ -87,8 +87,8 @@ class ExpertSystem(object):
             if r:
                 id, prob, name = r.split(",")
                 self.resolutions[int(id)] = Resolution(int(id), name, float(prob))
-        if os.path.exists("probs.dat") and os.path.exists("answer_count.dat"):
-            probs_list = codecs.open("probs.dat", "r", FILE_ENCODING).readlines()
+        if os.path.exists("data/probs.dat") and os.path.exists("data/answer_count.dat"):
+            probs_list = codecs.open("data/probs.dat", "r", FILE_ENCODING).readlines()
             for probs in probs_list:
                 probs = probs.strip()
                 if probs:
@@ -98,7 +98,7 @@ class ExpertSystem(object):
                     if int(q_id) not in self.probs[int(r_id)]:
                         self.probs[int(r_id)][int(q_id)] = {}
                     self.probs[int(r_id)][int(q_id)][int(ans_id)] = float(prob)
-            answer_count_list = codecs.open("answer_count.dat", "r", FILE_ENCODING).readlines()
+            answer_count_list = codecs.open("data/answer_count.dat", "r", FILE_ENCODING).readlines()
             for answer_count in answer_count_list:
                 answer_count = answer_count.strip()
                 if answer_count:
@@ -119,18 +119,18 @@ class ExpertSystem(object):
                         self.probs[r_id][q_id][ans.id] = 1.0
 
     def save(self):
-        f = codecs.open("resolutions.dat", "w+", FILE_ENCODING)
+        f = codecs.open("data/resolutions.dat", "w+", FILE_ENCODING)
         f.write("%d\n" % (self.total_guess_count))
         for resolution in self.resolutions.values():
             f.write("%d,%f,%s\n" % (resolution.id, resolution.prob, resolution.name))
         f.close()
-        f = codecs.open("probs.dat", "w+", FILE_ENCODING)
+        f = codecs.open("data/probs.dat", "w+", FILE_ENCODING)
         for r_id in self.probs:
             for q_id in self.probs[r_id]:
                 for ans_id in self.probs[r_id][q_id]:
                     f.write("%d,%d,%d,%f\n" % (r_id, q_id, ans_id, self.probs[r_id][q_id][ans_id]))
         f.close()
-        f = codecs.open("answer_count.dat", "w+", FILE_ENCODING)
+        f = codecs.open("data/answer_count.dat", "w+", FILE_ENCODING)
         for r_id in self.answer_count:
             for q_id in self.answer_count[r_id]:
                 f.write("%d,%d,%f\n" % (r_id, q_id, self.answer_count[r_id][q_id]))
