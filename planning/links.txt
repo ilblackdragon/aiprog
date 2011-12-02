@@ -1,0 +1,37 @@
+Links about planning
+
+
+Video:
+http://videolectures.net/icaps2010_srivastava_cacpl/
+http://videolectures.net/icaps2010_hoos_design/ - checking perfomance of syntesised algos
+http://videolectures.net/icaps2010_vardi_design/ - Algorithm syntesis
+
+Sites:
+http://ai-center.botik.ru/planning/
+http://rbr.cs.umass.edu/research/genplan.html
+
+Resoning:
+http://en.wikipedia.org/wiki/Automated_reasoning
+
+
+Peter Norvig Book shelf:
+http://books.google.com/books?uid=111815788291054011027&as_coll=5&source=gbs_lp_bookshelf_list
+
+Books:
+
+Deduction metodologies:
+http://books.google.com/books?id=yQ8dovxxTQcC&printsec=frontcover&source=gbs_ge_summary_r&cad=0#v=onepage&q&f=false
+
+Automated planning Theory & Practice
+
+
+Moshe Y. Vardi:
+http://www.cs.rice.edu/~vardi/
+http://www.cs.rice.edu/~vardi/bibl.pdf
+
+Ron van der Meyden:
+http://www.cse.unsw.edu.au/~meyden/research/publications.html
+
+STRIPS (Stanford Research Institute Problem Solver)
+First Order Logic Problem Solver
+https://github.com/tansey/strips

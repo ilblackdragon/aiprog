@@ -1,5 +1,8 @@
+from math import log
 import codecs
 import os
+
+# UTILITES
 
 FILE_ENCODING = 'cp1251'
 CONSOLE_ENCODING = 'cp866'
@@ -19,6 +22,15 @@ def create_object(line, types, object_class, *args, **kwargs):
     args = get_terms(line, types) + list(args)
     return object_class(*args, **kwargs)
     
+def create_multi_dict(default_value, args):
+    if not args:
+        return default_value
+    result = {}
+    for iter in args:
+        for item in iter:
+            result[item] = create_multi_dict(default_value, args[1:])
+    return result
+    
 class ObjectWithName(object):
         
     def __unicode__(self):
@@ -27,6 +39,11 @@ class ObjectWithName(object):
     def __repr__(self):
         return unicode(self).encode(CONSOLE_ENCODING)
 
+def entropy(x):
+    return -log(x)*x
+        
+# Expert system
+        
 class Resolution(ObjectWithName):
     
     def __init__(self, id, prob, name):
@@ -144,12 +161,27 @@ class ExpertSystem(object):
         
                 
     def get_question(self):
+        current_q = None
+        current_entropy = 999999
+        res_probs = self.get_resolution_probs()
         for q in self.questions:
-            if q not in self.asked:
-                return self.questions[q];
-        return None
+            if q in self.asked:
+                continue
+            ce = 0
+            for a in self.questions[q].answers:
+                pa = 0
+                for resolution, res_prob in zip(self.resolutions, res_probs):
+                    pa += res_prob * (self.probs[resolution][q][a.id] / self.answer_count[resolution][q])
+                self.asked[q] = a
+                current_res_probs = self.get_resolution_probs()
+                ce += pa * sum([entropy(c_prob) for c_prob in current_res_probs])
+                self.asked.pop(q)
+            if ce < current_entropy:
+                current_entropy = ce
+                current_q = self.questions[q]
+        return current_q
                 
-    def get_answer(self):
+    def get_resolution_probs(self):
         res = [0] * len(self.resolutions)
         for i, resolution in enumerate(self.resolutions.values()):
             p = 1
@@ -157,8 +189,13 @@ class ExpertSystem(object):
                 p *= self.probs[resolution.id][q_id][self.asked[q_id].id] / self.answer_count[resolution.id][q_id]
             res[i] = p * resolution.prob / self.total_guess_count
         res = [x / sum(res) for x in res]
+        return res
+                
+    def get_answer(self):
+        res = self.get_resolution_probs()
         print(res)
-        return self.resolutions.values()[res.index(max(res))]
+        st = max(res)
+        return (self.resolutions.values()[res.index(st)], st)
                 
     def run(self):
         self.asked = {}
@@ -170,7 +207,10 @@ class ExpertSystem(object):
             if not ans:
                 break
             self.asked[q.id] = ans
-        answer = self.get_answer()
+            answer, st = self.get_answer()
+            if st > 0.8:
+                break
+        answer, st = self.get_answer()
         print("My best choice: %s" % answer )
         try:
             corr_ans = raw_input("Am I right? [Y/N] ")
