@@ -7,7 +7,7 @@ AI topics
 Papers:
 * http://www.aiportal.ru/ - AI Portal (ru)
 * http://www.projecthalo.com/ - Project Halo, that puts idea of developing "Digital Aristotel" that can answer questions and explain it's reasoning
-* 
+
 
 Source code:
 * https://wiki.python.org/moin/PythonForArtificialIntelligence
@@ -43,6 +43,7 @@ Papers:
 * http://www.cs.toronto.edu/~ilya/pubs/2011/LANG-RNN.pdf - Generating Text with Recurrent Neural Network
 * http://www.fit.vutbr.cz/~imikolov/rnnlm/char.pdf - Subword language modeling with Neural Networks
 * http://www.cs.princeton.edu/~blei/papers/HoffmanBleiBach2010b.pdf - Online Learing for Latent Dirichlet Allocation
+* http://www.cs.cmu.edu/~acarlson/papers/carlson-aaai10.pdf - Toward an Architecture for Never-Ending Language Learning
 
 Source code:
 * https://code.google.com/p/word2vec/ - Word2Vec (by Google)
@@ -54,6 +55,7 @@ Videos:
 Scalable machine learning
 =========================
 
+Papers:
 * https://github.com/JohnLangford/vowpal_wabbit/wiki - Vowpal Wabbit
 * http://www.slideshare.net/jakehofman/technical-tricks-of-vowpal-wabbit - Technical tricks of vowpal wabbit
 
