@@ -33,6 +33,7 @@ self-taught learning with text documents (NLP + DL)
 * http://nlp.stanford.edu/pubs/SocherLinNgManning_ICML2011.pdf - Parsing Natural Scenes and Natural Language with Recursive Neural Networks
 * http://staff.computing.dundee.ac.uk//katya/lata083a.pdf - First order deduction in neural networks
 * http://www-prima.inrialpes.fr/guillame-bert/publication/NSRL26.pdf - First-order Logic Learinig in Artificial Neural Networks
+* http://ronan.collobert.com/pub/matos/2011_knowbases_aaai.pdf - Learning Structured Embeddings of Knoweldge Bases
 
 Source code:
 * https://github.com/nitishsrivastava/deepnet
@@ -58,6 +59,7 @@ Papers:
 * http://engineering.stanford.edu/news/stanford-algorithm-analyzes-sentence-sentiment-advances-machine-learning - Setiment analysis (Stanford)
 * http://nlp.stanford.edu/courses/NAACL2013/ - Deep Learning for NLP
 * http://ai.stanford.edu/~ang/papers/nipsdlufl10-ProbabilisticModelSemanticWordVectors.pdf - A Probabilistic Model for Semantic Word Vectors
+* http://arxiv.org/pdf/1301.3781.pdf - Efficient Estimation of Word Representation in Vector Space (word embedding, word2vec, Google)
 
 Source code:
 * https://code.google.com/p/word2vec/ - Word2Vec (by Google)
