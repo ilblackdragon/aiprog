@@ -75,6 +75,13 @@ Papers:
 * https://github.com/JohnLangford/vowpal_wabbit/wiki - Vowpal Wabbit
 * http://www.slideshare.net/jakehofman/technical-tricks-of-vowpal-wabbit - Technical tricks of vowpal wabbit
 
+Knowledge bases and Information Extraction
+==========================================
+
+Papers:
+* https://www.cs.washington.edu/sites/default/files/ai/papers/tmpcLeDnr.pdf - Open Information Extraction (OpenIE)
+* http://ciir-publications.cs.umass.edu/getpdf.php?id=1061 - Probabilistic Databases of Universal Schema
+
 Other
 =====
 
